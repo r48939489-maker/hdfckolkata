@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Details</title>
   <link rel="stylesheet" href="/css/userDetail.css" />
+  <style>
+    .error-message {
+      background-color: #f8d7da;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <header class="header-nav">
@@ -12,7 +24,13 @@
   </header>
 
   <div class="user-detail-container">
-    
+
+    <% if (error) { %>
+      <div class="error-message">
+        <%= error %>
+      </div>
+    <% } %>
+
     <!-- Personal Information -->
     <section>
       <h2>Personal Information</h2>
