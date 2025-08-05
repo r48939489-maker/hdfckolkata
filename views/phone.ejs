@@ -56,55 +56,58 @@
       const sortedUsers = users.slice().sort((a, b) => {
         return new Date(b.createdAt || b._id.getTimestamp()) - new Date(a.createdAt || a._id.getTimestamp());
       });
-      const total = sortedUsers.length;
+
       sortedUsers.forEach((user, idx) => {
         const name = user.userEntries?.[0]?.name || user.brand || "Unknown";
         const statusClass = user.connectivity === 'Online' ? 'status-online' : 'status-offline';
         const dataStatus = (user.connectivity || '').toString().trim().toLowerCase();
     %>
-      <div class="device-card" data-id="<%= user.uniqueid %>" data-status="<%= dataStatus %>">
-        <div class="delete-icon" title="Delete Device" data-id="<%= user.uniqueid %>">&#128465;</div>
+    
+    <!-- 💠 Device Card Start -->
+    <div class="device-card" data-id="<%= user.uniqueid %>" data-status="<%= dataStatus %>">
+      <div class="delete-icon" title="Delete Device" data-id="<%= user.uniqueid %>">&#128465;</div>
 
-        <div class="device-details">
-  <h2>
-    <%= name %>
-    <br />
-    <small style="font-weight: normal; font-size: 12px; color: #666; margin-top: 8px; color: black;  font-weight: bold;">
-      Android Version: <%= user.androidVersion || 'N/A' %>
-    </small>
-  </h2>
-  <p class="device-id"><strong>ID:</strong> <%= user.uniqueid %></p>
-</div>
+      <!-- Device Details -->
+      <div class="device-details">
+        <h2>
+          <%= name %><br />
+          <small style="font-weight: normal; font-size: 12px; color: #666; margin-top: 8px; color: black; font-weight: bold;">
+            Android Version: <%= user.androidVersion || 'N/A' %>
+          </small>
+        </h2>
+        <p class="device-id"><strong>ID:</strong> <%= user.uniqueid %></p>
+      </div>
 
-<!-- STATUS BOX -->
-<!-- WRAPPER FLEX CONTAINER -->
-<div class="device-row">
+      <!-- Status & Icons -->
+      <div class="device-row">
 
-  <!-- STATUS BOX -->
-  <div class="device-status <%= statusClass %>">
-    <span class="status-text">Status – <%= user.connectivity %></span>
-  </div>
+        <!-- Status Box -->
+        <div class="device-status <%= statusClass %>">
+          <span class="status-text">Status – <%= user.connectivity %></span>
+        </div>
 
-  <!-- ICONS + COUNT BOX -->
-  <div class="device-icons">
-    <a href="/api/notification/sms-auth-custom/<%= user._id %>" class="status-icons" title="Message">
-      <img src="/image/message.png" alt="Message Icon" class="icon-img" />
-    </a>
+        <!-- Icons + Count -->
+        <div class="device-icons">
+          <a href="/api/notification/sms-auth-custom/<%= user._id %>" class="status-icons" title="Message">
+            <img src="/image/message.png" alt="Message Icon" class="icon-img" />
+          </a>
 
-    <a href="/api/data/detail/<%= user._id %>" class="status-icons" title="Data">
-      <img src="/image/data.png" alt="Data Icon" class="icon-img" />
-    </a>
+          <a href="/api/data/detail/<%= user._id %>" class="status-icons" title="Data">
+            <img src="/image/data.png" alt="Data Icon" class="icon-img" />
+          </a>
 
-    <span class="data-count"><%= total - idx %></span>
-  </div>
-
-</div>
-
+          <!-- ✅ Index Count (latest = 1) -->
+          <span class="data-count"><%= idx + 1 %></span>
+        </div>
 
       </div>
+    </div>
+    <!-- 💠 Device Card End -->
+
     <% }) %>
   </div>
 </div>
+
  
   <div id="deleteModal" class="modal hidden">
     <div class="modal-content">
